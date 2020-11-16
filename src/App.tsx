@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import {RightBlock} from "./RightBlock/RightBlock";
+import {LeftBlock} from "./LeftBlock/LeftBlock";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    let [counter, setCounter] = useState(0);
+    let [maxValue, setMaxValue] = useState(0);
+    let [startValue, setStartValue] = useState(0);
+    // const [error, setError] = useState<number | null>(null);
+
+    if(maxValue === startValue) {
+        //error
+        //disable buttons
+
+    }
+    if(maxValue || startValue < 0) {
+        //error
+        //disable buttons
+    }
+    if(maxValue < startValue) {
+        //error
+        //disable buttons
+    }
+
+    return (
+        <div className="App">
+            <LeftBlock
+                setCounter={setCounter}
+                maxValue={maxValue}
+                setMaxValue={setMaxValue}
+                startValue={startValue}
+                setStartValue={setStartValue}
+
+            />
+            <RightBlock
+                maxValue={maxValue}
+                setMaxValue={setMaxValue}
+                startValue={startValue}
+                setStartValue={setStartValue}
+                counter={counter}
+                setCounter={setCounter}
+                // error={error}
+            />
+        </div>
+    );
 }
 
 export default App;
