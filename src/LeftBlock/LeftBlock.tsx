@@ -6,7 +6,9 @@ export type LeftBlockProps = {
     startValue: number
     setCounter: (value: number) => void
     setMaxValue: (value: number) => void
-    setStartValue: (value: number) => void
+    changeMinValue: (value: number) => void
+    set: () => void
+    setDis: boolean
 }
 
 
@@ -32,7 +34,7 @@ export const LeftBlock = (props: LeftBlockProps) => {
                     <span>start value:</span>
                     <input type="number"
                            value={props.startValue}
-                           onChange={e => props.setStartValue(+e.currentTarget.value)}
+                           onChange={e => props.changeMinValue(+e.currentTarget.value)}
                            className={"input"}
                     />
                 </div>
@@ -40,8 +42,11 @@ export const LeftBlock = (props: LeftBlockProps) => {
 
             <div className="block1">
                 <Button title={buttonSet.title}
-                        onClick={ () => {props.setCounter(props.startValue)}}
-                        className={"button"}
+                        disabled={props.setDis}
+                        onClick={() => {
+                            props.set()
+                        }}
+                        //className={"button"}
                 />
             </div>
         </div>

@@ -5,23 +5,44 @@ import {LeftBlock} from "./LeftBlock/LeftBlock";
 
 function App() {
 
-    let [counter, setCounter] = useState(0);
-    let [maxValue, setMaxValue] = useState(0);
-    let [startValue, setStartValue] = useState(0);
-    // const [error, setError] = useState<number | null>(null);
+    let [maxValue, setMaxValue] = useState(5);
+    let [startValue, setStartValue] = useState(1);
+    let [counter, setCounter] = useState<string | number>('Enter value');
 
-    if(maxValue === startValue) {
-        //error
-        //disable buttons
+    const [error, setError] = useState<boolean>(false);
 
+    let [incDis, setIncDis] = useState<boolean>(true);
+    let [setDis, setSetDis] = useState<boolean>(false);
+    let [resetDis, setResetDis] = useState<boolean>(true);
+
+    const changeMinValue = (minValue: number) => {
+        if (minValue < 0 || minValue > maxValue || minValue === maxValue) {
+            setError(true)
+            setSetDis(true)
+        } else {
+            setError(false)
+            setSetDis(false)
+        }
+        setStartValue(minValue)
     }
-    if(maxValue || startValue < 0) {
-        //error
-        //disable buttons
+    const set = () => {
+        setSetDis(true)
+        setCounter(startValue)
+        setIncDis(false)
     }
-    if(maxValue < startValue) {
-        //error
-        //disable buttons
+    const inc = () => {
+        setCounter(counter < maxValue
+            ? +counter + 1
+            : maxValue)
+        if (counter === maxValue - 1) {
+            setIncDis(true)
+            setResetDis(false)
+        }
+    }
+
+    const res = () => {
+        setResetDis(true)
+        setCounter(startValue)
     }
 
     return (
@@ -30,9 +51,10 @@ function App() {
                 setCounter={setCounter}
                 maxValue={maxValue}
                 setMaxValue={setMaxValue}
+                changeMinValue={changeMinValue}
                 startValue={startValue}
-                setStartValue={setStartValue}
-
+                set={set}
+                setDis={setDis}
             />
             <RightBlock
                 maxValue={maxValue}
@@ -41,7 +63,11 @@ function App() {
                 setStartValue={setStartValue}
                 counter={counter}
                 setCounter={setCounter}
-                // error={error}
+                error={error}
+                inc={inc}
+                incDis={incDis}
+                res={res}
+                resetDis={resetDis}
             />
         </div>
     );
