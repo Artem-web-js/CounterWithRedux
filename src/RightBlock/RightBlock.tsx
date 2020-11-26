@@ -13,7 +13,6 @@ export type RightBlockProps = {
     inc: () => void
     incDis: boolean
     res: () => void
-    resetDis: boolean
 }
 
 export const RightBlock = (props: RightBlockProps) => {
@@ -38,7 +37,7 @@ export const RightBlock = (props: RightBlockProps) => {
                         }}
                 />
                 <Button title={buttonReset.title}
-                        disabled={props.resetDis}
+                        disabled={false}
                         onClick={() => {
                             props.res()
                         }}

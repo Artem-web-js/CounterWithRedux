@@ -5,18 +5,30 @@ import {LeftBlock} from "./LeftBlock/LeftBlock";
 
 function App() {
 
+
+
     let [maxValue, setMaxValue] = useState(5);
-    let [startValue, setStartValue] = useState(1);
-    let [counter, setCounter] = useState<string | number>('Enter value');
+    let [startValue, setStartValue] = useState(0);
+    let [counter, setCounter] = useState<string | number>(0);
 
     const [error, setError] = useState<boolean>(false);
 
     let [incDis, setIncDis] = useState<boolean>(true);
     let [setDis, setSetDis] = useState<boolean>(false);
-    let [resetDis, setResetDis] = useState<boolean>(true);
+
+    const saveStateLoc = (key: string, state: any) => {
+        let stateToString = JSON.stringify(state)
+        localStorage.setItem(key, stateToString)
+    }
+
+    const restoreState = (key: string) => {
+        let stateToString = localStorage.getItem(key)
+        if (stateToString === null) return {maxValue: 5, startValue: 0}
+        else return JSON.parse(stateToString)
+    }
 
     const changeMinValue = (minValue: number) => {
-        if (minValue < 0 || maxValue < 0 || minValue > maxValue || minValue === maxValue) {
+        if (minValue < 0 || minValue > maxValue || minValue === maxValue) {
             setError(true)
             setSetDis(true)
         } else {
@@ -24,10 +36,11 @@ function App() {
             setSetDis(false)
         }
         setStartValue(minValue)
+        setIncDis(true)
     }
 
     const changeMaxValue = (maxValue: number) => {
-        if (startValue < 0 || maxValue < 0 || startValue > maxValue || startValue === maxValue) {
+        if (maxValue < 0 || startValue > maxValue || startValue === maxValue) {
             setError(true)
             setSetDis(true)
         } else {
@@ -35,12 +48,15 @@ function App() {
             setSetDis(false)
         }
         setMaxValue(maxValue)
+        setIncDis(true)
     }
 
     const set = () => {
         setSetDis(true)
-        setCounter(startValue)
         setIncDis(false)
+        setCounter(startValue)
+
+        saveStateLoc('state', {maxValue: maxValue, startValue: startValue})
     }
     const inc = () => {
         setCounter(counter < maxValue
@@ -48,13 +64,12 @@ function App() {
             : maxValue)
         if (counter === maxValue - 1) {
             setIncDis(true)
-            setResetDis(false)
         }
     }
 
     const res = () => {
-        setResetDis(true)
         setCounter(startValue)
+        setIncDis(false)
     }
 
     return (
@@ -81,7 +96,6 @@ function App() {
                 inc={inc}
                 incDis={incDis}
                 res={res}
-                resetDis={resetDis}
             />
         </div>
     );
