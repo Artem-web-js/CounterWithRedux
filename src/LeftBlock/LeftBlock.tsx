@@ -7,8 +7,10 @@ export type LeftBlockProps = {
     setCounter: (value: number) => void
     setMaxValue: (value: number) => void
     changeMinValue: (value: number) => void
+    changeMaxValue: (value: number) => void
     set: () => void
     setDis: boolean
+    error: boolean
 }
 
 
@@ -26,8 +28,8 @@ export const LeftBlock = (props: LeftBlockProps) => {
                     <span>max value:</span>
                     <input type="number"
                            value={props.maxValue}
-                           onChange={e => props.setMaxValue(+e.currentTarget.value)}
-                           className={"input"}
+                           onChange={e => props.changeMaxValue(+e.currentTarget.value)}
+                           className={`input ${props.error ? 'inputError' : ''}`}
                     />
                 </div>
                 <div className={"icon"}>
@@ -35,7 +37,7 @@ export const LeftBlock = (props: LeftBlockProps) => {
                     <input type="number"
                            value={props.startValue}
                            onChange={e => props.changeMinValue(+e.currentTarget.value)}
-                           className={"input"}
+                           className={`input ${props.error ? 'inputError' : ''}`}
                     />
                 </div>
             </div>
@@ -46,7 +48,6 @@ export const LeftBlock = (props: LeftBlockProps) => {
                         onClick={() => {
                             props.set()
                         }}
-                        //className={"button"}
                 />
             </div>
         </div>

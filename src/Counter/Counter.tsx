@@ -7,7 +7,7 @@ type CounterType = {
 }
 export const Counter = (props: CounterType) => {
     return (
-        <div className={`counter ${props.counter === props.maxValue ? "error" : ""}`}>
+        <div className={`counter ${props.counter === props.maxValue || props.error ? "error" : ""}`}>
             {props.error ? 'Incorrect value' : props.counter}
         </div>
     )

@@ -16,7 +16,7 @@ function App() {
     let [resetDis, setResetDis] = useState<boolean>(true);
 
     const changeMinValue = (minValue: number) => {
-        if (minValue < 0 || minValue > maxValue || minValue === maxValue) {
+        if (minValue < 0 || maxValue < 0 || minValue > maxValue || minValue === maxValue) {
             setError(true)
             setSetDis(true)
         } else {
@@ -25,6 +25,18 @@ function App() {
         }
         setStartValue(minValue)
     }
+
+    const changeMaxValue = (maxValue: number) => {
+        if (startValue < 0 || maxValue < 0 || startValue > maxValue || startValue === maxValue) {
+            setError(true)
+            setSetDis(true)
+        } else {
+            setError(false)
+            setSetDis(false)
+        }
+        setMaxValue(maxValue)
+    }
+
     const set = () => {
         setSetDis(true)
         setCounter(startValue)
@@ -52,9 +64,11 @@ function App() {
                 maxValue={maxValue}
                 setMaxValue={setMaxValue}
                 changeMinValue={changeMinValue}
+                changeMaxValue={changeMaxValue}
                 startValue={startValue}
                 set={set}
                 setDis={setDis}
+                error={error}
             />
             <RightBlock
                 maxValue={maxValue}

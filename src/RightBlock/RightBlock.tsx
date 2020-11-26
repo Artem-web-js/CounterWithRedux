@@ -19,17 +19,11 @@ export type RightBlockProps = {
 export const RightBlock = (props: RightBlockProps) => {
 
     const buttonInc = {
-        //className: !props.startValue || props.counter === props.maxValue ? "disable" : "",
         title: "inc"
     }
     const buttonReset = {
-        //className: props.counter === props.startValue || props.counter !== props.maxValue ? "disable" : "",
         title: "reset"
     }
-
-    // const incHandler = () => {props.setCounter(props.counter < props.maxValue
-    //     ? +props.counter + 1
-    //     : props.maxValue)}
 
     return (
         <div className="RightBlock">
@@ -42,14 +36,12 @@ export const RightBlock = (props: RightBlockProps) => {
                         onClick={() => {
                             props.inc()
                         }}
-                        //className={buttonInc.className}
                 />
                 <Button title={buttonReset.title}
                         disabled={props.resetDis}
                         onClick={() => {
                             props.res()
                         }}
-                        //className={buttonReset.className}
                 />
             </div>
         </div>

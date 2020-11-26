@@ -76,16 +76,17 @@ button:hover {
 
 .error {
     color: red;
-    font-size: 45px;
     font-weight: 700;
-}
-
-.disable {
-    opacity: 0.5;
+    padding: 0;
 }
 
 input {
     width: 50px;
     border: 2px solid lightslategrey;
     border-radius: 5px;
+}
+
+.inputError {
+    border: 2px solid red;
+    background-color: lightpink;
 }
