@@ -32,15 +32,11 @@ export const RightBlock = (props: RightBlockProps) => {
             <div className="block1">
                 <Button title={buttonInc.title}
                         disabled={props.incDis}
-                        onClick={() => {
-                            props.inc()
-                        }}
+                        onClick={props.inc}
                 />
                 <Button title={buttonReset.title}
                         disabled={false}
-                        onClick={() => {
-                            props.res()
-                        }}
+                        onClick={props.res}
                 />
             </div>
         </div>

@@ -45,9 +45,7 @@ export const LeftBlock = (props: LeftBlockProps) => {
             <div className="block1">
                 <Button title={buttonSet.title}
                         disabled={props.setDis}
-                        onClick={() => {
-                            props.set()
-                        }}
+                        onClick={props.set}
                 />
             </div>
         </div>

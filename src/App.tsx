@@ -5,10 +5,13 @@ import {LeftBlock} from "./LeftBlock/LeftBlock";
 
 function App() {
 
+    let stateToString = localStorage.getItem('state')
+    let  state = {maxValue: 5, startValue: 0}
+    if (stateToString !== null) state = JSON.parse(stateToString)
 
+    let [maxValue, setMaxValue] = useState<number>(state.maxValue);
+    let [startValue, setStartValue] = useState<number>(state.startValue);
 
-    let [maxValue, setMaxValue] = useState(5);
-    let [startValue, setStartValue] = useState(0);
     let [counter, setCounter] = useState<string | number>(0);
 
     const [error, setError] = useState<boolean>(false);
@@ -19,12 +22,6 @@ function App() {
     const saveStateLoc = (key: string, state: any) => {
         let stateToString = JSON.stringify(state)
         localStorage.setItem(key, stateToString)
-    }
-
-    const restoreState = (key: string) => {
-        let stateToString = localStorage.getItem(key)
-        if (stateToString === null) return {maxValue: 5, startValue: 0}
-        else return JSON.parse(stateToString)
     }
 
     const changeMinValue = (minValue: number) => {
