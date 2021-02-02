@@ -3,13 +3,11 @@ import {Button} from "../Button/Button";
 
 export type LeftBlockProps = {
     maxValue: number
-    startValue: number
-    setCounter: (value: number) => void
-    setMaxValue: (value: number) => void
-    changeMinValue: (value: number) => void
-    changeMaxValue: (value: number) => void
-    set: () => void
-    setDis: boolean
+    minValue: number
+    changeMinVal: (value: number) => void
+    changeMaxVal: (value: number) => void
+    set: (startValue: number, maxValue: number) => void
+    setButton: boolean
     error: boolean
 }
 
@@ -28,15 +26,17 @@ export const LeftBlock = (props: LeftBlockProps) => {
                     <span>max value:</span>
                     <input type="number"
                            value={props.maxValue}
-                           onChange={e => props.changeMaxValue(+e.currentTarget.value)}
+                           onChange={e => {
+                               props.changeMaxVal(+e.currentTarget.value)
+                           }}
                            className={`input ${props.error ? 'inputError' : ''}`}
                     />
                 </div>
                 <div className={"icon"}>
                     <span>start value:</span>
                     <input type="number"
-                           value={props.startValue}
-                           onChange={e => props.changeMinValue(+e.currentTarget.value)}
+                           value={props.minValue}
+                           onChange={e => props.changeMinVal(+e.currentTarget.value)}
                            className={`input ${props.error ? 'inputError' : ''}`}
                     />
                 </div>
@@ -44,8 +44,8 @@ export const LeftBlock = (props: LeftBlockProps) => {
 
             <div className="block1">
                 <Button title={buttonSet.title}
-                        disabled={props.setDis}
-                        onClick={props.set}
+                        disabled={props.setButton}
+                        onClick={() => props.set(props.minValue, props.maxValue)}
                 />
             </div>
         </div>

@@ -1,98 +1,58 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import {RightBlock} from "./RightBlock/RightBlock";
 import {LeftBlock} from "./LeftBlock/LeftBlock";
+import {useDispatch, useSelector} from "react-redux";
+import {changeMaxValue, changeMinValue, increment, reset, setValue, StateType} from "./store/counter-reducer";
+import {AppRootStateType} from './store/store';
+import {counterSetValues} from './services/localStorageServices'
 
 function App() {
 
-    let stateToString = localStorage.getItem('state')
-    let  state = {maxValue: 5, startValue: 0}
-    if (stateToString !== null) state = JSON.parse(stateToString)
+    const countSate = useSelector<AppRootStateType, StateType>(state => state)
+    const dispatch = useDispatch();
 
-    let [maxValue, setMaxValue] = useState<number>(state.maxValue);
-    let [startValue, setStartValue] = useState<number>(state.startValue);
-
-    let [counter, setCounter] = useState<string | number>(0);
-
-    const [error, setError] = useState<boolean>(false);
-
-    let [incDis, setIncDis] = useState<boolean>(true);
-    let [setDis, setSetDis] = useState<boolean>(false);
-
-    const saveStateLoc = (key: string, state: any) => {
-        let stateToString = JSON.stringify(state)
-        localStorage.setItem(key, stateToString)
+    const changeMinVal = (minValue: number) => {
+        dispatch(changeMinValue(minValue))
     }
 
-    const changeMinValue = (minValue: number) => {
-        if (minValue < 0 || minValue > maxValue || minValue === maxValue) {
-            setError(true)
-            setSetDis(true)
-        } else {
-            setError(false)
-            setSetDis(false)
-        }
-        setStartValue(minValue)
-        setIncDis(true)
+    const changeMaxVal = (maxValue: number) => {
+        dispatch(changeMaxValue(maxValue))
     }
 
-    const changeMaxValue = (maxValue: number) => {
-        if (maxValue < 0 || startValue > maxValue || startValue === maxValue) {
-            setError(true)
-            setSetDis(true)
-        } else {
-            setError(false)
-            setSetDis(false)
-        }
-        setMaxValue(maxValue)
-        setIncDis(true)
-    }
+    const set = (startValue: number, maxValue: number) => {
+        dispatch(setValue(startValue, maxValue))
 
-    const set = () => {
-        setSetDis(true)
-        setIncDis(false)
-        setCounter(startValue)
-
-        saveStateLoc('state', {maxValue: maxValue, startValue: startValue})
+        counterSetValues({maxValue: maxValue, minValue: startValue})
     }
     const inc = () => {
-        setCounter(counter < maxValue
-            ? +counter + 1
-            : maxValue)
-        if (counter === maxValue - 1) {
-            setIncDis(true)
-        }
+        dispatch(increment())
     }
 
     const res = () => {
-        setCounter(startValue)
-        setIncDis(false)
+        dispatch(reset())
     }
 
     return (
         <div className="App">
             <LeftBlock
-                setCounter={setCounter}
-                maxValue={maxValue}
-                setMaxValue={setMaxValue}
-                changeMinValue={changeMinValue}
-                changeMaxValue={changeMaxValue}
-                startValue={startValue}
+                maxValue={countSate.maxValue}
+                minValue={countSate.minValue}
+                error={countSate.error}
+                changeMinVal={changeMinVal}
+                changeMaxVal={changeMaxVal}
                 set={set}
-                setDis={setDis}
-                error={error}
+                setButton={countSate.setButton}
             />
             <RightBlock
-                maxValue={maxValue}
-                setMaxValue={setMaxValue}
-                startValue={startValue}
-                setStartValue={setStartValue}
-                counter={counter}
-                setCounter={setCounter}
-                error={error}
+                maxValue={countSate.maxValue}
+                minValue={countSate.minValue}
+                counter={countSate.counter}
+                error={countSate.error}
                 inc={inc}
-                incDis={incDis}
                 res={res}
+                incrementButton={countSate.incrementButton}
+                resetButton={countSate.resetButton}
             />
         </div>
     );

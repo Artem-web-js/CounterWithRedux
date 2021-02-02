@@ -5,14 +5,12 @@ import {Counter} from '../Counter/Counter';
 export type RightBlockProps = {
     error: boolean
     counter: number | string
-    setCounter: (value: number) => void
     maxValue: number
-    startValue: number
-    setMaxValue: (value: number) => void
-    setStartValue: (value: number) => void
+    minValue: number
     inc: () => void
-    incDis: boolean
+    incrementButton: boolean
     res: () => void
+    resetButton: boolean
 }
 
 export const RightBlock = (props: RightBlockProps) => {
@@ -31,11 +29,11 @@ export const RightBlock = (props: RightBlockProps) => {
 
             <div className="block1">
                 <Button title={buttonInc.title}
-                        disabled={props.incDis}
+                        disabled={props.incrementButton}
                         onClick={props.inc}
                 />
                 <Button title={buttonReset.title}
-                        disabled={false}
+                        disabled={props.resetButton}
                         onClick={props.res}
                 />
             </div>
